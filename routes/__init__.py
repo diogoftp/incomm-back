@@ -5,6 +5,7 @@ from flask_cors import CORS
 from routes.login.login import login
 from routes.token.token import token
 from routes.info.info import info
+from routes.transactions.transactions import transactions
 
 api = Flask(__name__)
 CORS(api)
@@ -17,3 +18,4 @@ else:
 api.register_blueprint(login, url_prefix="/api/login")
 api.register_blueprint(token, url_prefix="/api/token")
 api.register_blueprint(info, url_prefix="/api/info")
+api.register_blueprint(transactions, url_prefix="/api/transactions")

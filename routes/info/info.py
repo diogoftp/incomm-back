@@ -16,4 +16,4 @@ card_data = {
 @token_required()
 def get(user_data):
     # TODO: get from database
-    return {"success": True, "message": "Login realizado com sucesso", "data": {"card_data": card_data}}, 200
+    return {"success": True, "message": "Dados do cartão lidos com sucesso", "data": {"card_data": card_data}}, 200
