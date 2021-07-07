@@ -1,5 +1,5 @@
-from flask import Blueprint, request
-from utils.auth import encode_token
+from flask import Blueprint
+from utils.auth import token_required
 
 from datetime import datetime, timedelta
 
@@ -13,6 +13,7 @@ card_data = {
 }
 
 @info.route("", methods=["GET"])
-def get():
+@token_required()
+def get(user_data):
     # TODO: get from database
     return {"success": True, "message": "Login realizado com sucesso", "data": {"card_data": card_data}}, 200
