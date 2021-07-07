@@ -1,36 +1,28 @@
+import json
+from datetime import datetime
+
+import requests
 from flask import Blueprint
 from utils.auth import token_required
 
-from datetime import datetime, timedelta
-
 transactions = Blueprint("transactions", __name__)
 
-transactions_data = [
-    {
-        "key": "1",
-        "type": "withdrawl",
-        "date": "06/07/2021",
-        "value": 500.0,
-        "identification": "E-Commerce"
-    },
-    {
-        "key": "2",
-        "type": "activation",
-        "date": "05/07/2021",
-        "value": -100.0,
-        "identification": "Loja Shopping"
-    },
-    {
-        "key": "3",
-        "type": "cancellation",
-        "date": "22/06/2021",
-        "value": -100.0,
-        "identification": "Loja Shopping"
-    }
-]
+HEADERS = {
+    "content-type": "application/json",
+    "x-api-key": "PMAK-60c15befee0d380034366a96-0c571bc1bf1379aa80d655e94e4d9348f6"
+}
+
 
 @transactions.route("", methods=["GET"])
 @token_required()
 def get(user_data):
-    # TODO: get from database
-    return {"success": True, "message": "Login realizado com sucesso", "data": {"transactions_data": transactions_data}}, 200
+    transactions_data = requests.get("https://133b8793-d9dc-47b1-b2fe-4831f8859a7b.mock.pstmn.io//api/v1/gift-card/transactions", headers=HEADERS)
+    if transactions_data.status_code != 200:
+        return {"success": False, "message": "Falha ao comunicar com a API externa", "data": {"transactions_data": None}}, 200
+    transactions_data = json.loads(transactions_data.text)
+    key = 0
+    for item in transactions_data:
+        item["key"] = key
+        item["transaction_date"] = datetime.strptime(item["transaction_date"], "%Y-%m-%d").strftime("%d/%m/%Y")
+        key += 1
+    return {"success": True, "message": "Transações lidas com sucesso", "data": {"transactions_data": transactions_data}}, 200
