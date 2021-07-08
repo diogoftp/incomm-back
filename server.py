@@ -1,10 +1,8 @@
 import sys
-import logging
 
 from gevent.pywsgi import WSGIServer
-from routes import api
 
-#logging.basicConfig(filename="backlog.log", level=logging.DEBUG)
+from routes import api
 
 if __name__ == "__main__":
     if "debug" in sys.argv:

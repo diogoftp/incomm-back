@@ -1,23 +1,22 @@
-import logging
 import os
 from datetime import datetime, timedelta
 from functools import wraps
 
+import bcrypt
 import jwt
 from flask import request
 
 if "JWT_SECRET" in os.environ:
     JWT_SECRET = os.environ.get("JWT_SECRET")
 else:
-    JWT_SECRET = "146d3e23cf5cfe60c6783ca89eae9474b75202e3105093e4"
+    JWT_SECRET = "146d3e23cf5cfe60c6783fa89eve2474b75202e3105093e4"
 
 def encode_token(user_data):
     try:
         user_data["exp"] = datetime.utcnow() + timedelta(days=1)
         token = jwt.encode(user_data, JWT_SECRET, algorithm="HS256")
         return token
-    except Exception as e:
-        logging.info("Failed to encode token: " + e)
+    except Exception:
         return None
 
 def get_token():
@@ -47,3 +46,8 @@ def token_required():
             return f(user_data, *args, **kwargs)
         return decorator
     return validate_token
+
+def check_password(password, hashed_password):
+    if bcrypt.hashpw(password.encode("utf-8"), hashed_password) == hashed_password:
+        return True
+    return False

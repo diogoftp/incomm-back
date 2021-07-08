@@ -1,6 +1,6 @@
 import jwt
 from flask import Blueprint, request
-from utils.auth import encode_token, get_token, decode_token
+from utils.auth import decode_token, encode_token, get_token
 
 token = Blueprint("token", __name__)
 

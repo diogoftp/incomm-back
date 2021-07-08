@@ -12,7 +12,6 @@ HEADERS = {
     "x-api-key": "PMAK-60c15befee0d380034366a96-0c571bc1bf1379aa80d655e94e4d9348f6"
 }
 
-
 @transactions.route("", methods=["GET"])
 @token_required()
 def get(user_data):
