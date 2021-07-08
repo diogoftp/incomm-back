@@ -16,7 +16,7 @@ HEADERS = {
 @transactions.route("", methods=["GET"])
 @token_required()
 def get(user_data):
-    transactions_data = database.transactions.find({"card_number": user_data["card_number"]}, {"_id": False})
+    transactions_data = database.transactions.find({"card_number": user_data["card_number"]}, {"_id": False, "card_number": False})
     if not transactions_data:
         return {"success": False, "message": "Falha ao obter transações", "data": {"transactions_data": None}}, 200
     key = 0
