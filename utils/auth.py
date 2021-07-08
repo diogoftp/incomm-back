@@ -31,7 +31,7 @@ def decode_token(token):
 def token_required():
     def validate_token(f):
         @wraps(f)
-        def decorator(*args, **kwargs):
+        def decorator(self, *args, **kwargs):
             token = get_token()
             if not token:
                 return {"success": False, "message": "Token não encontrado", "data": {}}, 401
@@ -43,7 +43,7 @@ def token_required():
                 return {"success": False, "message": "Erro na validação do token", "data": {}}, 401
             except jwt.exceptions.InvalidTokenError:
                 return {"success": False, "message": "Token inválido", "data": {}}, 401
-            return f(user_data, *args, **kwargs)
+            return f(self, user_data, *args, **kwargs)
         return decorator
     return validate_token
 
