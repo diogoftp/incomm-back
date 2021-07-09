@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"GiftCards.gift_cards"},{"v":{"$numberInt":"2"},"unique":true,"key":{"number":{"$numberInt":"1"}},"name":"number_1","ns":"GiftCards.gift_cards"}],"uuid":"11eb7f49e90d4b73adb4df55a8ed6e94"}
