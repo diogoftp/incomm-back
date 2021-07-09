@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  mongodb:
+    container_name: monbodb
+    image: "mongo:5.0-rc"
+    command: mongod --port 5123
+    ports:
+      - "5123:5123"
+  webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5002:5002"
+    environment:
+      - JWT_SECRET=246d3a23cf5cfe60c6783fg89eve2474b75202e3105093e9
+      - DB_NAME=GiftCards
+      - DB_URI=mongodb://mongodb:5123/
