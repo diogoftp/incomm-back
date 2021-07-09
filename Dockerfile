@@ -6,5 +6,4 @@ RUN python -m pip install --upgrade pip && python -m pip install -r /app/require
 COPY . /app
 WORKDIR /app
 EXPOSE 5002
-RUN python ./scripts/database_generator.py || true
 CMD python ./server.py

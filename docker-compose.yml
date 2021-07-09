@@ -1,13 +1,13 @@
 version: "3"
 services:
   mongodb:
-    container_name: monbodb
+    container_name: mongodb
     image: "mongo:5.0-rc"
     command: mongod --port 5123
     ports:
       - "5123:5123"
     volumes:
-      - ./data/db
+      - /data/db:/data/db
   mongo-initial-data:
     build:
       context: .
@@ -16,8 +16,8 @@ services:
       - mongodb
     depends_on:
       - mongodb
-  webserver:
-    container_name: webserver
+  incomm-api:
+    container_name: incomm-api
     depends_on:
       - mongodb
     build:
@@ -29,4 +29,3 @@ services:
       - JWT_SECRET=246d3a23cf5cfe60c6783fg89eve2474b75202e3105093e9
       - DB_NAME=GiftCards
       - DB_URI=mongodb://mongodb:5123/
-    #command: bash -c "python ./scripts/database_generator.py && python ./server.py"
