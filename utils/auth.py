@@ -6,18 +6,19 @@ import bcrypt
 import jwt
 from flask import request
 
-if "JWT_SECRET" in os.environ:
-    JWT_SECRET = os.environ.get("JWT_SECRET")
-else:
-    JWT_SECRET = "146d3e23cf5cfe60c6783fa89eve2474b75202e3105093e4"
+DEFAULT_JWT_SECRET = "146d3e23cf5cfe60c6783fa89eve2474b75202e3105093e4"
+
+def get_jwt_secret():
+    if "JWT_SECRET" in os.environ:
+        return os.environ.get("JWT_SECRET")
+    return DEFAULT_JWT_SECRET
+
+JWT_SECRET = get_jwt_secret()
 
 def encode_token(user_data):
-    try:
-        user_data["exp"] = datetime.utcnow() + timedelta(days=1)
-        token = jwt.encode(user_data, JWT_SECRET, algorithm="HS256")
-        return token
-    except Exception:
-        return None
+    user_data["exp"] = datetime.utcnow() + timedelta(days=3)
+    token = jwt.encode(user_data, JWT_SECRET, algorithm="HS256")
+    return token.decode("utf-8")
 
 def get_token():
     token = request.headers.get("Authorization")
@@ -39,10 +40,8 @@ def token_required():
                 user_data = decode_token(token)
             except jwt.exceptions.ExpiredSignatureError:
                 return {"success": False, "message": "Token expirado", "data": {}}, 401
-            except (jwt.exceptions.DecodeError, jwt.exceptions.InvalidSignatureError, jwt.exceptions.InvalidKeyError, jwt.exceptions.InvalidAlgorithmError, jwt.exceptions.MissingRequiredClaimError):
+            except (jwt.exceptions.InvalidTokenError, jwt.exceptions.DecodeError, jwt.exceptions.InvalidSignatureError, jwt.exceptions.InvalidKeyError, jwt.exceptions.InvalidAlgorithmError, jwt.exceptions.MissingRequiredClaimError):
                 return {"success": False, "message": "Erro na validação do token", "data": {}}, 401
-            except jwt.exceptions.InvalidTokenError:
-                return {"success": False, "message": "Token inválido", "data": {}}, 401
             return f(self, user_data, *args, **kwargs)
         return decorator
     return validate_token

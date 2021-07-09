@@ -1,5 +1,3 @@
-import os
-
 from flask import Flask
 from flask_cors import CORS
 from flask_restx import Api
@@ -9,19 +7,14 @@ from routes.login.login import api as login
 from routes.token.token import api as token
 from routes.transactions.transactions import api as transactions
 
-if "ENV" in os.environ:
-    ENVIRONMENT = os.environ.get("ENVIRONMENT")
-else:
-    ENVIRONMENT = "local"
-
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.config["RESTX_MASK_SWAGGER"] = False
 
-api = Api(
+api = Api (
     title="GiftCards-API",
     version="1.0",
-    description='API Gift Cards',
+    description="API Gift Cards",
     doc ="/api",
     prefix="/api"
 )

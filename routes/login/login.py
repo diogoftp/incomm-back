@@ -25,6 +25,4 @@ class Login(Resource):
         if not check_password(password, card["password"]):
             return {"success": False, "message": "Senha incorreta", "data": {"token": None}}, 200
         token = encode_token({"card_number": card["number"]})
-        if not token:
-            return {"success": False, "message": "Falha ao realizar o login", "data": {"token": None}}, 200
-        return {"success": True, "message": "Login realizado com sucesso", "data": {"token": token.decode("utf-8")}}, 200
+        return {"success": True, "message": "Login realizado com sucesso", "data": {"token": token}}, 200
