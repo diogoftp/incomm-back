@@ -1,3 +1,6 @@
+"""Endpoint for login operations
+"""
+
 from flask_restx import Resource, reqparse
 from utils.auth import check_password, encode_token
 from utils.database import database
@@ -13,6 +16,11 @@ class Login(Resource):
     @api.marshal_list_with(default_return)
     @api.doc(body = post_body)
     def post(self):
+        """POST method for login
+
+        Returns:
+            tuple (obj, int): response information and HTTP status code
+        """
         parser = reqparse.RequestParser()
         parser.add_argument("card_number", required=True, type=int)
         parser.add_argument("password", required=True, type=str)

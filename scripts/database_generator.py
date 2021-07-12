@@ -1,3 +1,6 @@
+"""This script generates initial data for the MongoDB database
+"""
+
 import os
 from datetime import datetime
 

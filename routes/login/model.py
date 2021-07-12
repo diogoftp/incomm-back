@@ -1,3 +1,6 @@
+"""Models for "/login" endpoint
+"""
+
 from flask_restx import Namespace, fields
 
 from model import authorizations, default_return_model

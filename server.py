@@ -4,6 +4,9 @@ from gevent.pywsgi import WSGIServer
 
 from routes import app
 
+"""Entrypoint for the API
+"""
+
 if __name__ == "__main__":
     if "debug" in sys.argv:
         app.run(host="0.0.0.0", port=5002, debug=True, threaded=True)

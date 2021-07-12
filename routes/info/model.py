@@ -1,3 +1,6 @@
+"""Models for "/info" endpoint
+"""
+
 from flask_restx import Namespace
 
 from model import authorizations, default_return_model

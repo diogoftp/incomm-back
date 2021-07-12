@@ -1,3 +1,6 @@
+"""Models that are shared by various modules
+"""
+
 from flask_restx import fields
 
 responses = {
