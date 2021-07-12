@@ -85,6 +85,8 @@ Card number: 1234567890123456
 Password: 123abc
 ```
 
+The transactions history has two tabs: internal and external. Internal refers to the data stored in the local MongoDB database. External refers to data fetched by this API from another API (provided in the specifications of this project).
+
 ## Design decisions
 * The project was created using [Flask](https://flask.palletsprojects.com/en/2.0.x/) and [Flask-RESTX](https://flask-restx.readthedocs.io/en/latest/) for swagger documentation.
 * [JWT](https://jwt.io/) was chosen as authentication because it is a modern and widely used solution.
